@@ -1,10 +1,10 @@
-# 🧠 Multi-Label Classification System for Customer Interaction Tagging  
+# Multi-Label Classification System for Customer Interaction Tagging  
 **Module**: Engineering and Evaluating AI Systems (H9EEAI)  
 **Institution**: National College of Ireland (MSc in Artificial Intelligence)
 
 ---
 
-### 🎯 Project Overview
+### Project Overview
 
 This project is a software engineering and machine learning solution developed as part of the **H9EEAI** module at NCI. The goal is to **design, implement, and evaluate architectures** for a real-world **multi-label classification task**.
 
@@ -18,9 +18,9 @@ The system transitions from an existing single-label pipeline to a more complex 
 
 ---
 
-### 🛠️ Architectures Designed
+### Architectures Designed
 
-#### ✅ 1. Chained Multi-Output Architecture (Implemented)
+#### 1. Chained Multi-Output Architecture (Implemented)
 
 - Each model’s prediction feeds into the next stage.
 - Models are trained sequentially and executed in a pipeline.
@@ -31,13 +31,13 @@ The system transitions from an existing single-label pipeline to a more complex 
 
 ---
 
-### 📊 Evaluation Metrics
+###  Evaluation Metrics
 
 - **Label Accuracy** (per class)
 - **Chained Accuracy** (full sequence correct)
 
 
-### 👨‍🏫 Submission Details
+### Submission Details
 
 - **Module**: Engineering and Evaluating AI Systems (H9EEAI)  
 - **Lecturer**: Jaswinder Singh  
@@ -46,9 +46,10 @@ The system transitions from an existing single-label pipeline to a more complex 
 
 ---
 
-### 👥 Team Members
+### Team Members
 
 - Danilo Angel Tito Rodriguez
 - Jose Manuel Lopez Garcia
+
 (Each member contributed to design, implementation, and documentation)
 
