@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# VS Code and PyCharm
+.vscode/
+.idea/
+
+# Environment
+.env
+.venv/
+
+# Os Files
+.DS_Store
+/.DS_Store
+Thumbs.db
+
+# Outputs
+/Outputs
+
+#  Temporary files
+*.tmp
+*.temp 
+*.bak
+*.swp
+*~
