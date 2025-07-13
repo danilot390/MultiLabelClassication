@@ -5,13 +5,24 @@ import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, classification_report
 
+from pathlib import Path
+import os
 import yaml
+import random
 
 from core.embeddings import get_tfidf_embd
 
-with open("configs/config.yaml", "r") as f:
-    Config = yaml.safe_load(f)
-import random
+CONFIG_PATH = Path(os.path.join('configs', 'config.yaml'))
+if not CONFIG_PATH.exists():
+    raise FileNotFoundError(f"Configuration file not found at {CONFIG_PATH}")
+
+def load_config(path: Path = CONFIG_PATH):
+    """Load configuration from a YAML file."""
+    with open(CONFIG_PATH, "r") as f:
+        return yaml.safe_load(f)  
+    
+Config = load_config()
+
 seed =0
 random.seed(seed)
 np.random.seed(seed)
@@ -134,3 +145,8 @@ def plot_classification_report(y_true, y_pred, title="Classification Report"):
     sns.heatmap(report_df.iloc[:, :-1], annot=True, fmt=".2f", cmap="YlGnBu")
     plt.title(title)
     plt.show()
+
+def save_data(df: pd.DataFrame, path: Path = Path(os.path.join('data','processed','data.csv') )):
+    # Save DataFrame to a CSV file.
+    df.to_csv(path, index=False)
+    print(f"Data saved to {path}")

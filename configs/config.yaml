@@ -15,3 +15,7 @@ GROUPED: 'y1'
 INTENT_COL: 'y2'
 TONE_COL: 'y3'
 RESOLUTION_COL: 'y4'
+
+# Raw  path data
+APP_GALLERY: 'data//raw//AppGallery.csv'
+PURCHASING: 'data//raw//Purchasing.csv'

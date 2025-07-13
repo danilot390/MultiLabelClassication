@@ -1,6 +1,6 @@
-from core.embeddings import get_tfidf_embd
-from core.preprocess import get_input_data, de_duplication, noise_remover, translate_to_en, Config, label_encoder
-from core.utils import Data, prepare_data, plot_confusion, plot_class_distribution, plot_classification_report
+from core.embeddings import get_tfidf_embd, Config
+from core.preprocess import get_input_data, de_duplication, noise_remover, translate_to_en, label_encoder
+from core.utils import Data, prepare_data, plot_confusion, plot_class_distribution, plot_classification_report, save_data
 
 from pipeline.trainer import model_predict, chained_model_prediction, chained_model_training
 
@@ -32,6 +32,8 @@ def preprocess_data(df:pd.DataFrame) -> pd.DataFrame:
 
     # translate data to english
     # df[Config['TICKET_SUMMARY']] = translate_to_en(df[Config['TICKET_SUMMARY']].tolist())
+    
+    save_data(df)
     return df, label_encoders
 
 def get_embeddings(df:pd.DataFrame):
