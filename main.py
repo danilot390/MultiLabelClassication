@@ -1,8 +1,8 @@
 from core.embeddings import get_tfidf_embd
 from core.preprocess import get_input_data, de_duplication, noise_remover, translate_to_en, Config, label_encoder
-from core.utils import Data, prepare_data
+from core.utils import Data, prepare_data, plot_confusion
 
-from pipeline.trainer import model_predict
+from pipeline.trainer import model_predict, chained_model_prediction, chained_model_training
 
 import pandas as pd
 import numpy as np
@@ -53,8 +53,20 @@ if __name__ == '__main__':
     X_train, X_test, y_intent_train, y_intent_test, y_tone_train, y_tone_test, y_resolution_train, y_resolution_test = prepare_data(
         df)
     
-    # for name, group_df in grouped_df:
-    #     print(name)
-    #     X, group_df = get_embeddings(group_df)
-    #     data = get_data_object(X, group_df)
-    #     perform_modelling(data, group_df, name)
+    # Train chained models and make the predictions
+    model_a, model_b, model_c = chained_model_training(X_train, y_intent_train, y_tone_train, y_resolution_train)
+    intent_predictions, tone_predictions, resolution_predictions = chained_model_prediction(model_a, model_b, model_c, X_test)
+    
+    print("Intent Results")
+    model_a.print_results(y_intent_test)
+    plot_confusion(y_intent_test, intent_predictions, "Intent Confusion Matrix")
+
+    print("Tone Results")
+    model_b.print_results(y_tone_test)
+    plot_confusion(y_tone_test, tone_predictions, "Tone Confusion Matrix")
+
+    print("Resolution Results")
+    model_c.print_results(y_resolution_test)
+    plot_confusion(y_resolution_test, resolution_predictions, "Resolution Confusion Matrix")
+
+

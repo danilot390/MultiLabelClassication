@@ -1,6 +1,9 @@
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+
 import yaml
 
 from core.embeddings import get_tfidf_embd
@@ -102,3 +105,10 @@ def prepare_data(df):
     _, _, y_resolution_train, y_resolution_test = train_test_split(X, y_resolution, test_size=0.2, random_state=42)
 
     return X_train, X_test, y_intent_train, y_intent_test, y_tone_train, y_tone_test, y_resolution_train, y_resolution_test
+
+def plot_confusion(y_true, y_pred, title="Confusion Matrix"):
+    cm = confusion_matrix(y_true, y_pred)
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm)
+    disp.plot(cmap=plt.cm.Blues)
+    plt.title(title)
+    plt.show()
