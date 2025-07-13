@@ -2,9 +2,9 @@ import numpy as np
 import pandas as pd
 from models.base import BaseModel
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import classification_report, confusion_matrix
-from numpy import *
+from sklearn.metrics import classification_report
 import random
+
 num_folds = 0
 seed =0
 # Data
@@ -41,7 +41,7 @@ class RandomForest(BaseModel):
     def print_results(self, y_test: np.ndarray):
         if self.predictions is None:
             raise ValueError("No predictions to print results for")
-        print(classification_report(y_test, self.predictions))
+        print(classification_report(y_test, self.predictions, zero_division=0))
 
     def data_transform(self) -> None:
         pass

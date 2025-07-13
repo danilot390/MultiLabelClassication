@@ -1,6 +1,6 @@
 from core.embeddings import get_tfidf_embd
 from core.preprocess import get_input_data, de_duplication, noise_remover, translate_to_en, Config, label_encoder
-from core.utils import Data, prepare_data, plot_confusion
+from core.utils import Data, prepare_data, plot_confusion, plot_class_distribution, plot_classification_report
 
 from pipeline.trainer import model_predict, chained_model_prediction, chained_model_training
 
@@ -69,4 +69,13 @@ if __name__ == '__main__':
     model_c.print_results(y_resolution_test)
     plot_confusion(y_resolution_test, resolution_predictions, "Resolution Confusion Matrix")
 
+    # Class distribution graph
+    plot_class_distribution(df, Config['INTENT_COL'], "Intent Distribution")
+    plot_class_distribution(df, Config['TONE_COL'], "Tone Distribution")
+    plot_class_distribution(df, Config['RESOLUTION_COL'], "Resolution Distribution")
+
+    #F1, precision and recall heatmaps
+    plot_classification_report(y_intent_test, intent_predictions, "Intent Classification Report")
+    plot_classification_report(y_tone_test, tone_predictions, "Tone Classification Report")
+    plot_classification_report(y_resolution_test, resolution_predictions, "Resolution Classification Report")
 

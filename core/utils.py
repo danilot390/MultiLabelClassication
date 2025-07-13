@@ -1,8 +1,9 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, classification_report
 
 import yaml
 
@@ -92,6 +93,7 @@ class Data():
     def get_X_DL_train(self):
         return self.X_DL_train
 
+
 def prepare_data(df):
     # Split the data for each label target
     
@@ -106,9 +108,29 @@ def prepare_data(df):
 
     return X_train, X_test, y_intent_train, y_intent_test, y_tone_train, y_tone_test, y_resolution_train, y_resolution_test
 
+# visualization functions
 def plot_confusion(y_true, y_pred, title="Confusion Matrix"):
     cm = confusion_matrix(y_true, y_pred)
     disp = ConfusionMatrixDisplay(confusion_matrix=cm)
     disp.plot(cmap=plt.cm.Blues)
+    plt.title(title)
+    plt.show()
+
+def plot_class_distribution(df, label_col, title="Class Distribution"):
+    plt.figure(figsize=(10, 4))
+    sns.countplot(x=label_col, data=df)
+    plt.title(title)
+    plt.xlabel('Class')
+    plt.ylabel('Count')
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.show()
+
+def plot_classification_report(y_true, y_pred, title="Classification Report"):
+    report_dict = classification_report(y_true, y_pred, output_dict=True, zero_division=0)
+    report_df = pd.DataFrame(report_dict).transpose().drop(['accuracy', 'macro avg', 'weighted avg'], errors='ignore')
+
+    plt.figure(figsize=(10, 6))
+    sns.heatmap(report_df.iloc[:, :-1], annot=True, fmt=".2f", cmap="YlGnBu")
     plt.title(title)
     plt.show()

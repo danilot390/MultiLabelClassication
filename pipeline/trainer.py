@@ -10,10 +10,6 @@ def model_predict(data, df, name):
     model.predict(data.X_test)
     model.print_results(data)
 
-
-def model_evaluate(model, data):
-    model.print_results(data)
-
 def chained_model_training(X_train, y_intent_train, y_tone_train, y_resolution_train):
     # Model A: Predict Intent
     data_a = Data(X_train, y_intent_train)
