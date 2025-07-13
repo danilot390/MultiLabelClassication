@@ -1,6 +1,6 @@
 from core.embeddings import get_tfidf_embd
-from core.preprocess import get_input_data, de_duplication, noise_remover, translate_to_en, Config
-from core.utils import Data
+from core.preprocess import get_input_data, de_duplication, noise_remover, translate_to_en, Config, label_encoder
+from core.utils import Data, prepare_data
 
 from pipeline.trainer import model_predict
 
@@ -20,9 +20,19 @@ def preprocess_data(df:pd.DataFrame) -> pd.DataFrame:
     df =  de_duplication(df)
     # remove noise in input data
     df = noise_remover(df)
+
+    # Handle missing values in the target columns
+    df = df.dropna(subset=[Config['INTENT_COL'], Config['TONE_COL'], Config['RESOLUTION_COL']])
+
+    # Encode categorical target variables into numeric values
+    label_encoders = label_encoder(df)
+
+    # Remove rows with empty text data
+    df = df[(df[Config['TICKET_SUMMARY']].str.strip() != '') & (df[Config['INTERACTION_CONTENT']].str.strip() != '')]
+
     # translate data to english
     # df[Config['TICKET_SUMMARY']] = translate_to_en(df[Config['TICKET_SUMMARY']].tolist())
-    return df
+    return df, label_encoders
 
 def get_embeddings(df:pd.DataFrame):
     X = get_tfidf_embd(df)  # get tf-idf embeddings
@@ -36,12 +46,15 @@ def perform_modelling(data: Data, df: pd.DataFrame, name):
 
 if __name__ == '__main__':
     df = load_data()
-    df = preprocess_data(df)
+    df, label_encoders = preprocess_data(df)
     df[Config['INTERACTION_CONTENT']] = df[Config['INTERACTION_CONTENT']].values.astype('U')
     df[Config['TICKET_SUMMARY']] = df[Config['TICKET_SUMMARY']].values.astype('U')
-    grouped_df = df.groupby(Config['GROUPED'])
-    for name, group_df in grouped_df:
-        print(name)
-        X, group_df = get_embeddings(group_df)
-        data = get_data_object(X, group_df)
-        perform_modelling(data, group_df, name)
+    
+    X_train, X_test, y_intent_train, y_intent_test, y_tone_train, y_tone_test, y_resolution_train, y_resolution_test = prepare_data(
+        df)
+    
+    # for name, group_df in grouped_df:
+    #     print(name)
+    #     X, group_df = get_embeddings(group_df)
+    #     data = get_data_object(X, group_df)
+    #     perform_modelling(data, group_df, name)

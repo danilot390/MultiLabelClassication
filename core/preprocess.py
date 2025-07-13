@@ -2,6 +2,8 @@ import pandas as pd
 import re
 import yaml
 
+from sklearn.preprocessing import LabelEncoder
+
 with open("configs/config.yaml", "r") as f:
     Config = yaml.safe_load(f)
     print("Config loaded successfully.")
@@ -168,6 +170,16 @@ def noise_remover(df: pd.DataFrame):
     df = df.loc[df.y1.isin(good_y1)]
     #print(df.shape)
     return df
+
+def label_encoder(df):
+    # Encode categorical target variables into numeric values
+    label_encoders = {}
+    for col in [Config['INTENT_COL'], Config['TONE_COL'], Config['RESOLUTION_COL']]:
+        le = LabelEncoder()
+        df[col] = le.fit_transform(df[col])
+        label_encoders[col] = le
+    
+    return label_encoders
 
 def translate_to_en(texts:list[str]):
     import stanza

@@ -10,3 +10,8 @@ TYPE_COLS:
 
 CLASS_COL: 'y2'
 GROUPED: 'y1'
+
+# New columns for Intent, Tone, and Resolution
+INTENT_COL: 'y2'
+TONE_COL: 'y3'
+RESOLUTION_COL: 'y4'

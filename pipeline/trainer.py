@@ -1,4 +1,4 @@
-from models.single_label_rf import RandomForest
+from models.multi_label_rf import RandomForest
 
 def model_predict(data, df, name):
     results = []
