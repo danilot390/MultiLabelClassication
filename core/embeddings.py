@@ -1,9 +1,7 @@
 import numpy as np
 import pandas as pd
 import yaml
-
-with open("configs/config.yaml", "r") as f:
-    Config = yaml.safe_load(f)
+from core.utils import Config
 
 import random
 seed =0
