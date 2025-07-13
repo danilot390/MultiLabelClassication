@@ -34,7 +34,7 @@ The system transitions from an existing single-label pipeline to a more complex 
 ###  Evaluation Metrics
 
 - **Label Accuracy** (per class)
-- **Chained Accuracy** (full sequence correct)
+- **f1-score, recall & precision** (full sequence correct)
 
 
 ### Submission Details
